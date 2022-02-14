@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% if msg == '' %}
+<form action="" method=POST>
+
+    {% csrf_token %}
+    <p>Are you sure you want to delete  {{project.name}} ?</p>
+    <input type="submit" name="" id="" value="Confirm">
+    <button><a href=" {% url 'myproject:projects' %} ">Back</a></button>
+
+
+</form>
+{% else %}
+    <h1> {{project.name}} deleted Successfully </h1>
+    <a href=" {% url 'myproject:projects' %} ">List Projects</a>
+{% endif %}
+
+{% endblock %}

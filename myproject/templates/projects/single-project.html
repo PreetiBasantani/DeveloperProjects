@@ -1,0 +1,77 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <!-- <h2>Single - Project Template</h2>
+    <p>
+        ID : {{ project.id }}   
+        <br>
+        Title : {{ project.title }}
+        <br>    
+        Description : {{ project.description }}
+    </p> -->
+
+    <p>
+        <strong>{{ proj.title  }}</strong>
+        <table style="border: groove blue 2px;">
+            <tr><td> <img src={{ proj.img}} alt=" No image">  </td></tr>
+            <tr>
+                <th>Review Description</th>
+                <th>Vote</th>
+            </tr>
+            {% for r in proj.review_set.all %}
+                <tr>
+                    
+                    <td>{{r.body}}</td>
+                    <td>{{r.value}}</td>
+                </tr>
+            
+            {% endfor %}
+
+        </table>
+
+        <!-- Main Section -->
+  <main class="singleProject my-md">
+    <div class="container">
+      <div class="layout">
+        <div class="column column--1of3">
+          <h3 class="singleProject__subtitle">Tools & Stacks</h3>
+          <div class="singleProject__toolStack">
+            
+           {% for tag in proj.tags.all %} 
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>{{tag}}</small>
+            </span>
+           {% endfor %}
+
+          </div>
+          {% if proj.source_link %}
+          <a class="singleProject__liveLink" href="{{proj.source_link}}" target="_blank"><i class="im im-external-link"></i>Source Code
+          </a>
+          {% endif %}
+
+          {% if proj.demo_link %}
+          <a class="singleProject__liveLink" href="{{proj.demo_link}}" target="_blank"><i class="im im-external-link"></i>Live Demo
+          </a>
+          {% endif %}
+        </div>
+        <div class="column column--2of3">
+          <img class="singleProject__preview" src="{{ proj.img.url }}" alt="portfolio thumbnail" />
+          <a href="profile.html" class="singleProject__developer">Md. Shahriar Parvez</a>
+          <h2 class="singleProject__title">{{proj.name}}</h2>
+          <h3 class="singleProject__subtitle">About the Project</h3>
+          <div class="singleProject__info">
+            {{proj.description}}
+                       
+          </div>
+
+          <div class="comments">
+            <h3 class="singleProject__subtitle">Feedback</h3>
+            <h5 class="project--rating">
+              {{project.vote_ratio}}% Postitive Feedback ({{project.vote_total}} Votes)
+            </h5>
+
+            
+  </main>
+
+
+{% endblock content %}

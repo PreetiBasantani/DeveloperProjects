@@ -1,0 +1,63 @@
+{% extends 'main1.html'  %}
+
+{% block content %}
+   <p>List of Projects</p> 
+   <table style="border: 2px groove blue;">
+      <tr >
+         <th>ID</th>
+         <th>Project Name</th>
+         <th>Votes</th>
+         <th>Positive Votes (%)</th>
+         <th>View</th>
+      </tr >
+      {% for p in projects %}
+         <tr>
+            <td>
+               {{p.id}}
+            </td>
+            <td>
+               {{p.title}}
+            </td>
+            <td>
+               {{p.vote_total}}
+            </td>
+            <td>
+               {{p.vote_ratio}}
+            </td>
+            <td>
+               <a href="{% url 'projects:project' p.id %}">view</a>
+            </td>
+            <td>
+               <a href="{% url 'projects:update-project' p.id %}">Edit</a>
+            </td>
+            <td>
+               <a href="{% url 'projects:delete-project' p.id %}">Delete</a>
+            </td>
+            
+         </tr>
+                                    
+         <!-- <p> -- <a href="{% url 'projects:project' p.id %}">{{p.title | title}} </a>--{{p.description|truncatewords:3 }}</p>
+    -->
+      {% endfor %}
+   </table>
+
+
+
+
+   
+
+   <hr>
+   {{date_val|date:"d/m/Y"}}
+   {{number}}
+   {% if number > 10 %}
+      <p>number is greater than 10</p>
+   
+   {% elif number == 10 %}
+      <p>number is exactly 10</p>
+   
+   {% else %}
+      <p> number is less than 10</p>
+   
+   {% endif %}
+
+{% endblock %}

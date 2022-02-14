@@ -1,0 +1,27 @@
+{% extends 'main1.html' %}
+
+{% block content  %}
+    <p>
+        <strong>{{ proj.title  }}</strong>
+       
+        <p><img src="{{proj.image.url}}" alt="No image"/></p>
+
+        <table style="border: groove blue 2px;">
+            <tr>
+                <th>Review Description</th>
+                <th>Vote</th>
+            </tr>
+            {% for r in proj.review_set.all %}
+                <tr>
+                    <td>{{r.body}}</td>
+                    <td>{{r.value}}</td>
+                </tr>
+            
+            {% endfor %}
+
+        </table>
+       
+        <!-- <p>{{proj.id}} <br> {{proj.title}} <br> {{proj.description}}</p>
+        <p>{{proj2.id}} <br> {{proj2.title}} <br> {{proj2.description}}</p> -->
+    </p>
+{% endblock %}
