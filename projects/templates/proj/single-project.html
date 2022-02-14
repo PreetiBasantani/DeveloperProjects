@@ -1,27 +1,81 @@
-{% extends 'main1.html' %}
+{% extends 'main.html' %}
 
 {% block content  %}
-    <p>
-        <strong>{{ proj.title  }}</strong>
-       
-        <p><img src="{{proj.image.url}}" alt="No image"/></p>
-
-        <table style="border: groove blue 2px;">
-            <tr>
-                <th>Review Description</th>
-                <th>Vote</th>
-            </tr>
-            {% for r in proj.review_set.all %}
-                <tr>
-                    <td>{{r.body}}</td>
-                    <td>{{r.value}}</td>
-                </tr>
-            
+   
+     <!-- Main Section -->
+  <main class="singleProject my-md">
+    <div class="container">
+      <div class="layout">
+        <div class="column column--1of3">
+          <h3 class="singleProject__subtitle">Tools & Stacks</h3>
+          <div class="singleProject__toolStack">
+            {% for tag in proj.tags.all  %}
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>{{tag}}</small>
+            </span>
             {% endfor %}
+            
+          </div>
+          {% if proj.source_link %}
+          <a class="singleProject__liveLink" href="{{proj.source_link}} " target="_blank"><i class="im im-external-link"></i>Source Code
+          </a>
+          {% endif %}
 
-        </table>
-       
-        <!-- <p>{{proj.id}} <br> {{proj.title}} <br> {{proj.description}}</p>
-        <p>{{proj2.id}} <br> {{proj2.title}} <br> {{proj2.description}}</p> -->
-    </p>
+          {% if proj.demo_link %}
+          <a class="singleProject__liveLink" href="{{proj.demo_link}} " target="_blank"><i class="im im-external-link"></i>Live Demo
+          </a>
+          {% endif %}
+
+        </div>
+        <div class="column column--2of3">
+          <img class="singleProject__preview" src="{{proj.image.url}}" alt="portfolio thumbnail" />
+          <a href="profile.html" class="singleProject__developer">Md. Shahriar Parvez</a>
+          <h2 class="singleProject__title">{{ proj.title}} </h2>
+          <h3 class="singleProject__subtitle">About the Project</h3>
+          <div class="singleProject__info">
+             {{ proj.description}}
+          </div>
+
+          <div class="comments">
+            <h3 class="singleProject__subtitle">Feedback</h3>
+            <h5 class="project--rating">
+              {{proj.vote_ratio}}% Postitive Feedback ( {{proj.vote_total}} Votes)
+            </h5>
+
+            <form class="form" action="#" method="POST">
+              <!-- Textarea -->
+              <div class="form__field">
+                <label for="formInput#textarea">Comments: </label>
+                <textarea class="input input--textarea" name="message" id="formInput#textarea"
+                  placeholder="Write your comments here..."></textarea>
+              </div>
+              <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
+            </form>
+            <div class="commentList">
+
+                {% for review in proj.review_set.all %}
+              <div class="comment">
+                <a href="profile.html">
+                  <img class="avatar avatar--md"
+                    src="https://pbs.twimg.com/profile_images/1335382240931368961/b3wSZKj4_400x400.jpg" alt="user" />
+                </a>
+                <div class="comment__details">
+                  <a href="profile.html" class="comment__author">Sulamita Ivanov</a>
+                  <p class="comment__info">
+                    {{review.body}}
+                  </p>
+                </div>
+              </div>
+
+              {% endfor %}
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+
 {% endblock %}

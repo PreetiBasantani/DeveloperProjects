@@ -3,6 +3,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Project,Review,Tag
 from .forms import ProjectForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 
@@ -48,20 +50,26 @@ def project(request,pk):
     return render(request,'proj/single-project.html',context)
 
 
-
+@login_required(login_url='users:login')
 def createProject(request):
+    profile = request.user.profile
     form  = ProjectForm()
 
     if request.method == 'POST':
         form = ProjectForm(request.POST,request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('projects:projects')
+            project = form.save(commit=False)
+            project.owner = profile
+            project.save()
+            messages.success(request,'Project created Successfully')
+            return redirect('users:account')
+        else:
+            messages.error(request,'Some errror occurred')
 
     context = {'form':form}
-    return render(request,'proj/create-project.html',context)
+    return render(request,'proj/project-form.html',context)
 
-
+@login_required(login_url='users:login')
 def updateProject(request,pk):
     proj = Project.objects.get(id=pk)
     proj_form =ProjectForm(instance =proj)
@@ -74,10 +82,10 @@ def updateProject(request,pk):
             print('Image saved in database')
             return redirect('projects:projects')
 
-    context = {'project_form':proj_form}
-    return render(request,'proj/update-project.html',context)
+    context = {'form':proj_form}
+    return render(request,'proj/project-form.html',context)
 
-
+@login_required(login_url='users:login')
 def deleteProject(request,pk):
     proj = Project.objects.get(id=pk)
 

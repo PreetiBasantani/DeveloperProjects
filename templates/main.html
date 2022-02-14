@@ -22,6 +22,26 @@
 </head>
 <body>
     {% include 'nav-bar.html' %}
+
+    <!-- {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{message.tags}}:{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} -->
+
+    {% if messages %}
+    {% for message in messages  %}
+    <div id="button" class="alert alert--{{message.tags}}">
+        <p class="alert__message"> {{message}} </p>
+        <button onclick="closebutton()" class="alert__close">⨯</button>
+      </div>
+    {% endfor %}
+
+    {% endif %}
+
+
     <hr>
     {% block content %}
 
@@ -29,6 +49,8 @@
     <p>
         Footer
     </p>
+
+    <script src="{% static 'js/proj.js' %} "></script>
     
 </body>
 </html>

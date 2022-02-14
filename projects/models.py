@@ -2,9 +2,14 @@ from email.policy import default
 from django.utils import timezone
 from django.db import models
 
+
+from users.models import Profile
+
 # Create your models here.
 
 class Project(models.Model):
+
+    owner = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,blank=True)
     title = models.CharField(max_length=200) 
     image = models.ImageField(upload_to='photos/',null=True ,blank=True, default='website.jpg')
     description = models.TextField(null=True,blank=True)
